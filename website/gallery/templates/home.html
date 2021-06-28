@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        #showmenu {
+            font-weight: 500;
+        }
+
+        .btn-light{
+            background-color: #a0e418 !important
+        }
+
+        .demo {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .demo {
+            border: 1px solid #C0C0C0;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+        .demo th {
+            border: 1px solid #C0C0C0;
+            padding: 5px;
+            background: #F0F0F0;
+        }
+
+        .demo td {
+            vertical-align: top;
+            border: 1px solid #C0C0C0;
+            padding: 5px;
+        }
+
+        #wochenplan caption {
+            caption-side: top;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+    <table class="demo" id="wochenplan">
+        <div class="fs-1 row align-items-center justify-content-center card-title ">Wochenplan</div>
+        <thead>
+        <tr>
+            <th style="text-align: center">
+                <form action="{% url "weekday_view" "Montag" %}">
+                    {% csrf_token %}
+                    <input id="showmenu" class="btn btn-light" type="submit" value="Montag"/>
+                </form>
+            </th>
+            <th style="text-align: center">
+                <form action="{% url "weekday_view" "Dienstag" %}">
+                    {% csrf_token %}
+                    <input id="showmenu" class="btn btn-light" type="submit" value="Dienstag"/>
+                </form>
+            </th>
+            <th style="text-align: center">
+                <form action="{% url "weekday_view" "Mittwoch" %}">
+                    {% csrf_token %}
+                    <input id="showmenu" class="btn btn-light" type="submit" value="Mittwoch"/>
+                </form>
+            </th>
+            <th style="text-align: center">
+                <form action="{% url "weekday_view" "Donnerstag" %}">
+                    {% csrf_token %}
+                    <input id="showmenu" class="btn btn-light" type="submit" value="Donnerstag"/>
+                </form>
+            </th>
+            <th style="text-align: center">
+                <form action="{% url "weekday_view" "Freitag" %}">
+                    {% csrf_token %}
+                    <input id="showmenu" class="btn btn-light" type="submit" value="Freitag"/>
+                </form>
+            </th>
+            <th style="text-align: center">
+                <form action="{% url "weekday_view" "Samstag" %}">
+                    {% csrf_token %}
+                    <input id="showmenu" class="btn btn-light" type="submit" value="Samstag"/>
+                </form>
+            </th>
+            <th style="text-align: center">
+                <form action="{% url "weekday_view" "Sonntag" %}">
+                    {% csrf_token %}
+                    <input id="showmenu" class="btn btn-light" type="submit" value="Sonntag"/>
+                </form>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                {% if context.monday %}
+                    {% for recipe in context.monday %}
+                        <p>
+                            <a class="text-decoration-none text-dark"
+                               href="{% url "recipe_profile" recipe.id %}">{{ recipe.name }}</a>
+                        </p>
+                    {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                {% if context.tuesday %}
+                    {% for recipe in context.tuesday %}
+                        <p>
+                            <a class="text-decoration-none text-dark"
+                               href="{% url "recipe_profile" recipe.id %}">{{ recipe.name }}</a>
+                        </p>
+                    {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                {% if context.wednesday %}
+                    {% for recipe in context.wednesday %}
+                        <p>
+                            <a class="text-decoration-none text-dark"
+                               href="{% url "recipe_profile" recipe.id %}">{{ recipe.name }}</a>
+                        </p>
+                    {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                {% if context.thursday %}
+                    {% for recipe in context.thursday %}
+                        <p>
+                            <a class="text-decoration-none text-dark"
+                               href="{% url "recipe_profile" recipe.id %}">{{ recipe.name }}</a>
+                        </p>
+                    {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                {% if context.friday %}
+                    {% for recipe in context.friday %}
+                        <p>
+                            <a class="text-decoration-none text-dark"
+                               href="{% url "recipe_profile" recipe.id %}">{{ recipe.name }}</a>
+                        </p>
+                    {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                {% if context.saturday %}
+                    {% for recipe in context.saturday %}
+                        <p>
+                            <a class="text-decoration-none text-dark"
+                               href="{% url "recipe_profile" recipe.id %}">{{ recipe.name }}</a>
+                        </p>
+                    {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                {% if context.sunday %}
+                    {% for recipe in context.sunday %}
+                        <p>
+                            <a class="text-decoration-none text-dark"
+                               href="{% url "recipe_profile" recipe.id %}">{{ recipe.name }}</a>
+                        </p>
+                    {% endfor %}
+                {% endif %}
+            </td>
+    </table>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+<{% block content %}
+    </head>
+    <div class="fs-1 row align-items-center justify-content-center card-title">{{ context.name }} Gericht</div>
+        <div class="d-flex justify-content-center">
+    {% if context.image %}
+        <p>
+        <img style="height:200px; max-height: 212px; max-width: 324px; width: 324px;"
+             src="{{ context.image.url }}">
+        </p>
+    {% endif %}
+        </div>
+    <div style="text-align: center;">
+        <div style="display: inline-block; text-align: left;">
+            {% if context.difficulty == 1 %}
+                <p><b> Schwierigkeitsgrad:</b> einfach </p>
+            {% elif context.difficulty == 2 %}
+                <p><b> Schwierigkeitsgrad:</b> mittel </p>
+            {% elif context.difficulty == 3 %}
+                <p><b> Schwierigkeitsgrad:</b> schwer </p>
+            {% else %}
+                <p><b> Schwierigkeitsgrad:</b> {{ context.difficulty }} </p>
+            {% endif %}
+            <p><b> Zubereitungszeit:</b> {{ context.duration }} </p>
+            <p><b> Portion(en):</b> {{ context.portion_size }} </p>
+            <p><b> Zutat(en):</b> {{ context.ingredients|linebreaks }} </p>
+            <p><b> Beschreibung:</b> {{ context.description|linebreaks }} </p>
+            <p><b> Autor:</b> {{ context.author }} </p>
+            <p><b> Erstell-/Updatedatum:</b> {{ context.created_at }} </p>
+            <p>
+            <form action="{% url "home" %}">
+                {% csrf_token %}
+                <input class="btn btn-primary" type="submit" value="OK"/>
+            </form>
+            </p>
+            <form action="{% url "update_recipe" context.id %}">
+                {% csrf_token %}
+                <input class="btn btn-warning" type="submit" value="Bearbeiten"/>
+            </form>
+            <p>
+            <form action="{% url "delete_recipe" context.id %}">
+                {% csrf_token %}
+                <input class="btn btn-danger" type="submit" value="Löschen"/>
+            </form>
+            </p>
+        </div>
+    </div>
+    </body>
+{% endblock %}

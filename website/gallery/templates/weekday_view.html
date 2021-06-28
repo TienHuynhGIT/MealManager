@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="fs-1 row align-items-center justify-content-center card-title ">Wochenplan bearbeiten</div>
+    <style>
+        #showmenu {
+            font-weight: 500;
+        }
+
+        .btn-light {
+            background-color: #a0e418 !important
+        }
+
+        .demo {
+            border: 1px solid #C0C0C0;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+        .demo th {
+            border: 1px solid #C0C0C0;
+            padding: 5px;
+            background: #F0F0F0;
+        }
+
+        .demo td {
+            border: 1px solid #C0C0C0;
+            padding: 5px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 80px;
+        }
+    </style>
+
+    <div class="d-flex justify-content-center">
+    <div class="grid-container">
+        <div class="grid-child purple">
+            <div style="text-align: center">
+                <a id="showmenu" class="btn btn-light" style="cursor:default">{{ context.day_of_week }}</a>
+            </div>
+            {% for recipe in context.recipes_on_weekday %}
+                <p>
+                <form action="{% url "remove_recipe" recipe.id context.day_of_week %}"
+                      style="display: inline;">
+                    {% csrf_token %}
+                    <a class="text-decoration-none text-dark"
+                       href="{% url "recipe_profile" recipe.id %}">{{ recipe.name }}</a>
+                    <input id="filter_reference_r" name="filter_reference_r" type="hidden" value={{ context.filter }}/>
+                    <input class="btn btn-danger btn-sm pull-right" style="float: right;" type="submit" value="-"/>
+                </form>
+                </p>
+                </li>
+            {% endfor %}
+            </p>
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-primary" href="{% url "home" %}">Fertig</a>
+            </div>
+        </div>
+        <div class="grid-child green">
+
+            <form action="{% url "weekday_view" context.day_of_week %}">
+                <div class="grid-child green" style="padding-bottom: 10px;">
+                    <select class="form-select" id="filter" name="filter" required onInput="this.updateFilter()"
+                            onchange="this.form.submit()">
+                        {% if context.filter == 'all' %}
+                            <option selected value="all">Alle Gerichte</option>
+                        {% else %}
+                            <option value="all">Alle Gerichte</option>
+                        {% endif %}
+                        {% if context.filter == 'own' %}
+                            <option selected value="own">Meine Gerichte</option>
+                        {% else %}
+                            <option value="own">Meine Gerichte</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </form>
+            {% if context.recipes %}
+                {% for recipe in context.recipes %}
+                    <form action="{% url "add_recipe" recipe.id context.day_of_week %}"
+                          style="display: inline;">
+                        {% csrf_token %}
+                        <a class="text-decoration-none text-dark"
+                           href="{% url "recipe_profile" recipe.id %}">{{ recipe.name }}</a>
+                        <input id="filter_reference" name="filter_reference" type="hidden" value={{ context.filter }}/>
+                        <input class="btn btn-secondary btn-sm" style="float: right;" type="submit" value="+"/>
+                    </form>
+                    </li>
+                    </p>
+                {% endfor %}
+            {% else %}
+                <p>keine Gerichte verfügbar</p>
+            {% endif %}
+            <nav style="text-align: center">
+                <p>
+                    <a class="btn btn-primary" style="margin:20px" href="{% url "create_recipe" %}">+ Neues Gericht</a>
+                </p>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+
+

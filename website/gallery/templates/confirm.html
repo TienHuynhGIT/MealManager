@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+<{% block content %}
+    </head>
+    <div class="fs-1 row align-items-center justify-content-center card-title ">Gericht löschen</div>
+    <div style="text-align: center;">
+        <div style="display: inline-block; text-align: center;">
+            <p>Möchten Sie das {{ context.name }} Gericht wirklich löschen?</p>
+        <form action="{% url "delete_recipe" context.id %}" method="post">
+            {% csrf_token %}
+            <input class="btn btn-primary" type="submit" value="Ja"/>
+        </form>
+        <p>
+        <form action="{% url "home" %}">
+            {% csrf_token %}
+            <input class="btn btn-warning" type="submit" value="Nein"/>
+        </form>
+        </p>
+    </div>
+    </div>
+    </body>
+{% endblock %}

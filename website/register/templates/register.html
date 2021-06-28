@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="fs-1 row align-items-center justify-content-center card-title ">Registrieren</div>
+    <div class="d-flex justify-content-center">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary" type="submit">OK</button>
+        </form>
+    </div>
+{% endblock %}
